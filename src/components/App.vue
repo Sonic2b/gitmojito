@@ -27,7 +27,7 @@
 <script lang="ts">
 
 import { Component, Vue } from 'vue-property-decorator'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, app } from 'electron'
 // @ts-ignore
 import * as matchSorter from 'match-sorter'
 
@@ -38,7 +38,7 @@ export default class MainViews extends Vue {
     textInput = ""
 
     beforeMount() {
-        this.loadGitJSON()
+        this.loadGitJSON()        
     }
 
     copyEmojie(g = undefined) {

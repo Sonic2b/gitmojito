@@ -2,7 +2,6 @@ import {app, BrowserWindow, ipcMain, Tray, Notification, clipboard, dialog} from
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import {enableLiveReload} from 'electron-compile'
 import * as path from 'path'
-import { MainWindow } from './main-process/mainWindow'
 
 const assetsDirectory = path.join(__dirname, 'assets')
 
@@ -133,6 +132,9 @@ ipcMain.on('show-window', () => {
           body: `${args.name}  was copied in clipboard`
       }).show()
       clipboard.writeText(args.code)
+      if (window) {
+          window.hide()
+      }
   })
   
   // @ts-ignore
