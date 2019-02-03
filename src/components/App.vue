@@ -1,13 +1,13 @@
 <template>
     <div class="ui container">
-        <div>
+        <div class="top-section">
             <form @submit.prevent="copyEmojie()" class="ui form">
                 <div class="field">
                     <input type="text" id="search" v-model="textInput">
                 </div>
             </form>
         </div>            
-            <div class="ui relaxed divided list">
+            <div class="result ui relaxed divided list">
                 <div v-for="g in emolist" class="item " :key="g.name">
                     <i class="large middle aligned icon">
                         {{g.emoji}}
@@ -28,6 +28,7 @@
 
 import { Component, Vue } from 'vue-property-decorator'
 import { ipcRenderer } from 'electron'
+// @ts-ignore
 import * as matchSorter from 'match-sorter'
 
 @Component
@@ -53,6 +54,9 @@ export default class MainViews extends Vue {
         fetch("https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json")
         .then(response => response.json())
         .then(res => this.gitmojieList = res.gitmojis)
+        .catch(err => {
+            ipcRenderer.send('fetch-error', err)
+        })
     }
 
 }
@@ -80,5 +84,15 @@ export default class MainViews extends Vue {
         color: #FFF !important;
     }
     
-
+    .top-section {
+        position: fixed;
+        width: 95%;
+    }
+    
+    .result {
+        top: 30px;
+        position: absolute;
+        overflow: auto;
+        height: 90%;
+    }
 </style>

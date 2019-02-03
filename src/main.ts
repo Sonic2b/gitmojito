@@ -1,7 +1,8 @@
-import {app, BrowserWindow, ipcMain, Tray, Notification, clipboard} from 'electron'
+import {app, BrowserWindow, ipcMain, Tray, Notification, clipboard, dialog} from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import {enableLiveReload} from 'electron-compile'
 import * as path from 'path'
+import { MainWindow } from './main-process/mainWindow'
 
 const assetsDirectory = path.join(__dirname, 'assets')
 
@@ -13,6 +14,10 @@ if (isDevMode) {
 }
 
 let window: Electron.BrowserWindow | null
+
+/**
+ * ------------------ CREATE WINDOW -----------------------------
+ */
 
 const createWindow = async () => {
 
@@ -53,6 +58,10 @@ const createWindow = async () => {
     })
 }
 
+/**
+ * ------------- TRAY CREATION ----------------------------
+ */
+
 const createTray = () => {
     tray = new Tray(path.join(assetsDirectory, 'gitmojito24.png'))
     tray.on('right-click', toggleWindow)
@@ -89,6 +98,10 @@ const getWindowPosition = () => {
     }
     return {x: 0, y: 0}
   }
+  
+/**
+ * -------------- EVENTS -----------------
+ */
 
 app.on('ready', createWindow)
 
@@ -120,4 +133,9 @@ ipcMain.on('show-window', () => {
           body: `${args.name}  was copied in clipboard`
       }).show()
       clipboard.writeText(args.code)
+  })
+  
+  // @ts-ignore
+  ipcMain.on('fetch-error', (event, args) => {
+      dialog.showErrorBox('Error', `Impossible to get the emojie list ${args.message}`)
   })
