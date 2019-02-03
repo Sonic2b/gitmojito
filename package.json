@@ -1,0 +1,33 @@
+{
+  "name": "gitmojito",
+  "version": "1.0.0",
+  "description": "A gitmoji selector",
+  "main": "src/main.ts",
+  "dependencies": {
+    "electron-compile": "^6.4.3",
+    "electron-devtools-installer": "^2.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "match-sorter": "^2.3.0",
+    "vue": "^2.4.4",
+    "vue-property-decorator": "^7.3.0",
+    "vueify": "^9.4.1"
+  },
+  "devDependencies": {
+    "@types/electron-devtools-installer": "^2.0.2",
+    "electron": "^5.0.0-beta.1",
+    "electron-forge": "^4.0.2",
+    "electron-prebuilt-compile": "1.7.6",
+    "tslint": "^5.7.0",
+    "typescript": "^3.2.0"
+  },
+  "scripts": {
+    "start": "node_modules/.bin/electron .",
+    "lint": "node_modules/.bin/tslint --project tsconfig.json --type-check --force",
+    "make": "node_modules/.bin/electron-forge make"
+  },
+  "author": "Brandon DeRosier",
+  "license": "MIT",
+  "config": {
+    "forge": "./forge.config.js"
+  }
+}
