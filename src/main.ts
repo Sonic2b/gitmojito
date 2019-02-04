@@ -21,14 +21,18 @@ let window: Electron.BrowserWindow | null
 const createWindow = async () => {
 
     createTray()
-    window = new BrowserWindow({ width: 300,
-        height: 450,
+    window = new BrowserWindow(
+      { 
+        width: 570,
+        height: 200,
         show: false,
         frame: false,
         fullscreenable: false,
         resizable: false,
         transparent: true,
-        backgroundColor: "FFFFFF30",
+        backgroundColor: "FFFFFF00",
+        opacity: 0.5,
+        center: true,
         webPreferences: {
           // Prevents renderer process code from not running when window is
           // hidden
@@ -63,7 +67,7 @@ const createWindow = async () => {
 
 const createTray = () => {
     tray = new Tray(path.join(assetsDirectory, 'gitmojito24.png'))
-    tray.on('right-click', toggleWindow)
+    // tray.on('right-click', toggleWindow)
     tray.on('double-click', toggleWindow)
     tray.on('click', toggleWindow)
 }
@@ -79,7 +83,7 @@ const toggleWindow = () => {
 const showWindow = () => {
     const position = getWindowPosition()
     if (window) {
-        window.setPosition(position.x, position.y, false)
+        // window.setPosition(position.x, position.y, false)
         window.show()
         window.focus()
     }
