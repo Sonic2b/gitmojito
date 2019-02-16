@@ -7,6 +7,14 @@ An electronjs app to have all gitmojie list in our tray bar
 * Research by name or description
 * Copy
 
+### TODO
+
+* CI/CD
+* Config file
+* Shortcut
+* Theming
+* File reorganisation
+
 ### How to use
 
 Available commands:
