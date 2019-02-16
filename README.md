@@ -4,7 +4,7 @@ An electronjs app to have all gitmojie list in our tray bar
 
 ### Features
 
-* Research by name or dsescription
+* Research by name or description
 * Copy
 
 ### How to use
@@ -16,7 +16,7 @@ Available commands:
 
 ### Known issues/future work
 
-* Add a keyboard shortcut with a different window for fullscreen search
+* Add config file
 * Highlight name and description when we search a gitmojie
-* Replace SemanticUI by our CSS
+* Replace SemanticUI by a custom CSS - DONE
 * Replace TS by JS (maybe)

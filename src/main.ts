@@ -38,6 +38,8 @@ const createWindow = async () => {
           // hidden
           backgroundThrottling: false
         }})
+        
+        window.setVibrancy('medium-light')
 
         app.dock.hide()
         window.setAlwaysOnTop(true, 'floating')
