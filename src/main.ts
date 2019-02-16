@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, Tray, Notification, clipboard} from 'electron'
+import {app, BrowserWindow, ipcMain, Tray, Notification, clipboard, dialog} from 'electron'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 import {enableLiveReload} from 'electron-compile'
 import * as path from 'path'
@@ -14,22 +14,32 @@ if (isDevMode) {
 
 let window: Electron.BrowserWindow | null
 
+/**
+ * ------------------ CREATE WINDOW -----------------------------
+ */
+
 const createWindow = async () => {
 
     createTray()
-    window = new BrowserWindow({ width: 300,
-        height: 450,
+    window = new BrowserWindow(
+      { 
+        width: 570,
+        height: 200,
         show: false,
         frame: false,
         fullscreenable: false,
         resizable: false,
         transparent: true,
-        backgroundColor: "FFFFFF30",
+        backgroundColor: "FFFFFF00",
+        opacity: 0.5,
+        center: true,
         webPreferences: {
           // Prevents renderer process code from not running when window is
           // hidden
           backgroundThrottling: false
         }})
+        
+        window.setVibrancy('medium-light')
 
         app.dock.hide()
         window.setAlwaysOnTop(true, 'floating')
@@ -53,9 +63,13 @@ const createWindow = async () => {
     })
 }
 
+/**
+ * ------------- TRAY CREATION ----------------------------
+ */
+
 const createTray = () => {
     tray = new Tray(path.join(assetsDirectory, 'gitmojito24.png'))
-    tray.on('right-click', toggleWindow)
+    // tray.on('right-click', toggleWindow)
     tray.on('double-click', toggleWindow)
     tray.on('click', toggleWindow)
 }
@@ -71,7 +85,7 @@ const toggleWindow = () => {
 const showWindow = () => {
     const position = getWindowPosition()
     if (window) {
-        window.setPosition(position.x, position.y, false)
+        // window.setPosition(position.x, position.y, false)
         window.show()
         window.focus()
     }
@@ -89,6 +103,10 @@ const getWindowPosition = () => {
     }
     return {x: 0, y: 0}
   }
+  
+/**
+ * -------------- EVENTS -----------------
+ */
 
 app.on('ready', createWindow)
 
@@ -120,4 +138,12 @@ ipcMain.on('show-window', () => {
           body: `${args.name}  was copied in clipboard`
       }).show()
       clipboard.writeText(args.code)
+      if (window) {
+          window.hide()
+      }
+  })
+  
+  // @ts-ignore
+  ipcMain.on('fetch-error', (event, args) => {
+      dialog.showErrorBox('Error', `Impossible to get the emojie list ${args.message}`)
   })
